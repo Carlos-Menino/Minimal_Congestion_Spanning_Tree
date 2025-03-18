@@ -1,3 +1,9 @@
+#Basic methods to generate test graphs
+#A graph is instanced as a list of edges. An edge is instanced as a list [u, v, w] where u is the initial vertex, v is the ending vertex and w is a positive weight
+#Unweighted graphs are treated as graphs with constant weight w = 1
+#At this moment we are not dealing with oriented graphs, thus we are not going to make distinction between [u,v,w] and [v,u,w].
+#Vertices are always labeled by integers from 0 to n-1, where n is the numer of vertices
+
 import random as rd
 import numpy as np
 import spanning_trees
@@ -5,7 +11,7 @@ import matplotlib.pyplot as plt
 import pylab as pl
 from matplotlib import collections  as mc
 
-def complete_graph(n):
+def complete_graph(n): #Complete graph with n vertices
     graph = []
     for i in range(n):
         if i < (n-1):
@@ -13,7 +19,7 @@ def complete_graph(n):
                 graph.append([i,j,1])
     return graph
 
-def complete_graph_sum_weighted(n):
+def complete_graph_sum_weighted(n): #Complete graph with n vertices, weights are the sum of adjacent vertex infices
     graph = []
     for i in range(n):
         if i < (n-1):
@@ -21,7 +27,7 @@ def complete_graph_sum_weighted(n):
                 graph.append([i,j,i+j])
     return graph
 
-def complete_graph_dif_weighted(n):
+def complete_graph_dif_weighted(n): #Complete graph with n vertices, weights are the modulus of the difference of adjacent vertex infices
     graph = []
     for i in range(n):
         if i < (n-1):
@@ -29,21 +35,21 @@ def complete_graph_dif_weighted(n):
                 graph.append([i,j,abs(j-i)])
     return graph
 
-def complete_bipartite_graph(n,m):
+def complete_bipartite_graph(n,m): #Complete bipartite graph with partition sets with n and m vertices
     graph = []
     for i in range(n):
         for j in range(n,m+n):
             graph.append([i,j,1])
     return graph
 
-def complete_bipartite_graph_sum_weighted(n,m):
+def complete_bipartite_graph_sum_weighted(n,m): #Complete bipartite graph with partition sets with n and m vertices, weights are the sum of adjacent vertex infices
     graph = []
     for i in range(n):
         for j in range(n,m+n):
             graph.append([i,j,i+j])
     return graph
 
-def complete_bipartite_graph_dif_weighted(n,m):
+def complete_bipartite_graph_dif_weighted(n,m): #Complete bipartite graph with partition sets with n and m vertices, weights are the modulus of the difference of adjacent vertex infices
     graph = []
     for i in range(n):
         for j in range(n,m+n):
@@ -51,7 +57,7 @@ def complete_bipartite_graph_dif_weighted(n,m):
     return graph
 
 
-def complete_multipartite(order_list):
+def complete_multipartite(order_list): #Complete multipartite where the size of partition sets is given by order_list
     number_sets = len(order_list)
     graph = []
     for i in range(number_sets-1):
@@ -64,7 +70,7 @@ def complete_multipartite(order_list):
                         graph.append([actual_index + k , moving_index + l,1])
     return graph
 
-def complete_multipartite_sum_weighted(order_list):
+def complete_multipartite_sum_weighted(order_list): #Complete multipartite where the size of partition sets is given by order_list, weights are the sum of adjacent vertex infices
     number_sets = len(order_list)
     graph = []
     for i in range(number_sets-1):
@@ -77,7 +83,7 @@ def complete_multipartite_sum_weighted(order_list):
                         graph.append([actual_index + k , moving_index + l, actual_index + k + moving_index + l])
     return graph
 
-def complete_multipartite_dif_weighted(order_list):
+def complete_multipartite_dif_weighted(order_list):  #Complete multipartite where the size of partition sets is given by order_list, weights are the modulus of the difference of adjacent vertex infices
     number_sets = len(order_list)
     graph = []
     for i in range(number_sets-1):
