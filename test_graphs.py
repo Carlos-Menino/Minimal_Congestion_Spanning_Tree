@@ -96,24 +96,31 @@ def complete_multipartite_dif_weighted(order_list):  #Complete multipartite wher
                         graph.append([actual_index + k , moving_index + l, abs(actual_index + k - (moving_index + l))])
     return graph
 
-def random_graph(number_vertices, edge_umbral):
+def random_graph(number_vertices, edge_umbral): # Random graph G(n.p)
     RG = []
     for i in range(number_vertices):
         for j in range(i):
             p = rd.random()
             if p < edge_umbral:
-                #random_weight = rd.choice(range(1,10)) #weights between 1 and 9
-                RG.append([i,j,1]) #random_weight])
+                RG.append([i,j,1])
     return RG
 
-def random_graph_sum_weighted(number_vertices, edge_umbral):
+def random_graph_sum_weighted(number_vertices, edge_umbral): # Random graph G(n,p), edge weights are the sum of adjacent vertices
     RG = []
     for i in range(number_vertices):
         for j in range(i):
             p = rd.random()
             if p < edge_umbral:
-                #random_weight = rd.choice(range(1,10)) #weights between 1 and 9
-                RG.append([i,j,i+j]) #random_weight])
+                RG.append([i,j,i+j])
+    return RG
+    
+def random_graph_dif_weighted(number_vertices, edge_umbral): # Random graph G(n,p), edge weights are the moduli of the difference of adjacent vertices
+    RG = []
+    for i in range(number_vertices):
+        for j in range(i):
+            p = rd.random()
+            if p < edge_umbral:
+                RG.append([i,j,abs(i-j)])
     return RG
 
 def grid_graph(n,m):
@@ -263,26 +270,22 @@ def random_planar_graph(n): #generates a planar geodesic graph of n random verti
                             w = b-a
                             det_uw = u[0]*w[1] - u[1]*w[0]
                             det_vw = v[0]*w[1] - v[1]*w[0]
-                            # dot_uw = np.dot(u,w)
-                            # dot_vw = np.dot(v,w)
-                            #print(det_uw,det_vw)
+                            
                             x = a-vertex 
                             y = b-vertex
                             z = vertex_c - vertex
                             det_xz = x[0]*z[1] - x[1]*z[0]
                             det_yz = y[0]*z[1] - y[1]*z[0]
-                            # dot_xz = np.dot(x,z)
-                            # dot_yz = np.dot(y,z)
-                            #print(det_xz,det_yz)
-                            if (det_uw*det_vw < 0) and (det_xz*det_yz < 0): #and (dot_uw < 0) and (dot_vw < 0)  and (dot_xz < 0) and (dot_yz < 0):
+                            
+                            if (det_uw*det_vw < 0) and (det_xz*det_yz < 0): 
                                 token = False                                
                         count = count + 1
                     if token == True:
-                        GG.append([l,k,1])# np.linalg.norm(vertex-vertex_c)])
+                        GG.append([l,k,1])
                         GC.append([l,k])
             else:
                 GC.append([0,1])
-                GG.append([0,1,1]) #np.linalg.norm(vertex-vertex_list[0])])
+                GG.append([0,1,1]) 
     
     lines = [[vertex_list[e[0]],vertex_list[e[1]]] for e in GG]
     lc = mc.LineCollection(lines, linewidths=2)
@@ -293,13 +296,12 @@ def random_planar_graph(n): #generates a planar geodesic graph of n random verti
     plt.show()
     return GG, vertex_list   
 
-def random_planar_graph_metric_weighted(n): #generates a planar geodesic graph of n random vertices in [0,1]x[0,1]
+def random_planar_graph_metric_weighted(n): #generates a planar geodesic graph of n random vertices in [0,1]x[0,1], edge weights are the distances between adjacent vertices
     GG=[]
     GC = []
     vertex_list = []
     for i in range(n):
         vertex = np.array([rd.random(),rd.random()])
-        #print(vertex)
         m = len(GG)
         k = len(vertex_list)
         vertex_list.append(vertex)
@@ -318,26 +320,22 @@ def random_planar_graph_metric_weighted(n): #generates a planar geodesic graph o
                             w = b-a
                             det_uw = u[0]*w[1] - u[1]*w[0]
                             det_vw = v[0]*w[1] - v[1]*w[0]
-                            # dot_uw = np.dot(u,w)
-                            # dot_vw = np.dot(v,w)
-                            #print(det_uw,det_vw)
+                            
                             x = a-vertex 
                             y = b-vertex
                             z = vertex_c - vertex
                             det_xz = x[0]*z[1] - x[1]*z[0]
                             det_yz = y[0]*z[1] - y[1]*z[0]
-                            # dot_xz = np.dot(x,z)
-                            # dot_yz = np.dot(y,z)
-                            #print(det_xz,det_yz)
-                            if (det_uw*det_vw < 0) and (det_xz*det_yz < 0): #and (dot_uw < 0) and (dot_vw < 0)  and (dot_xz < 0) and (dot_yz < 0):
+                        
+                            if (det_uw*det_vw < 0) and (det_xz*det_yz < 0): 
                                 token = False                                
                         count = count + 1
                     if token == True:
-                        GG.append([l,k,np.linalg.norm(vertex-vertex_c)]) # 1])# 
+                        GG.append([l,k,np.linalg.norm(vertex-vertex_c)]) 
                         GC.append([l,k])
             else:
                 GC.append([0,1])
-                GG.append([0,1,np.linalg.norm(vertex-vertex_list[0])]) # 1]) #
+                GG.append([0,1,np.linalg.norm(vertex-vertex_list[0])]) 
     
     lines = [[vertex_list[e[0]],vertex_list[e[1]]] for e in GG]
     lc = mc.LineCollection(lines, linewidths=2)
@@ -346,48 +344,6 @@ def random_planar_graph_metric_weighted(n): #generates a planar geodesic graph o
     ax.autoscale()
     ax.margins(0.1)
     plt.show()
-    return GG, vertex_list  
-
-def double_random_planar_graph(n,p): #generates a planar geodesic graph of n random vertices in [0,1]x[0,1], each new edge with probability p of appearance
-    GG=[]
-    vertex_list = []
-    for i in range(n):
-        vertex = np.array([rd.random(),rd.random()])
-        #print(vertex)
-        m = len(GG)
-        k = len(vertex_list)
-        vertex_list.append(vertex)
-        if k != 0:
-            if m != 0:
-                for l in range(k):
-                    vertex_c = vertex_list[l]
-                    token = True
-                    count = 0
-                    while (token == True)&(count < m):
-                        a = vertex_list[GG[count][0]]
-                        b = vertex_list[GG[count][1]]
-                        if (GG[count][0] != l) and (GG[count][1] != l):
-                            u = vertex-a
-                            v = vertex_c-a
-                            w = b-a
-                            det_uw = u[0]*w[1] - u[1]*w[0]
-                            det_vw = v[0]*w[1] - v[1]*w[0]
-                            x = a-vertex 
-                            y = b-vertex
-                            z = vertex_c - vertex
-                            det_xz = x[0]*z[1] - x[1]*z[0]
-                            det_yz = y[0]*z[1] - y[1]*z[0]
-                            if (det_uw*det_vw < 0) and (det_xz*det_yz < 0): #and (dot_uw < 0) and (dot_vw < 0)  and (dot_xz < 0) and (dot_yz < 0):
-                                token = False                                
-                        count = count + 1
-                    if token == True:
-                        q = rd.random()
-                        if q < p:
-                            GG.append([l,k,np.linalg.norm(vertex-vertex_c)])
-            else:
-                q = rd.random()
-                if q < p:
-                    GG.append([0,1,np.linalg.norm(vertex-vertex_list[0])])
     return GG, vertex_list  
 
 def quad_triangle_grid(n,m):
@@ -450,23 +406,21 @@ def triangle_hex_grid(n):
             for i in range(0,K):       
                 vertex_list.append(np.array([i ,j]))
                 if  j < n:
-                    if (K*j + i)%2 == 0: # and j%2 == 0:
+                    if (K*j + i)%2 == 0: 
                         GG.append([K*j + i,K*(j+1)+i,1])
-                    # elif (K*j + i)%2 == 0 and j%2 ==1:
-                    #     GG.append([K*j + i-int(j/2),K*(j+1)+i-int((j+1)/2),1])
+                    
                     if i != K-1:
                         GG.append([K*j+i,(i+1+K*j),1])
                 elif j==n:
                     if i != K-1:
                         GG.append([K*j+i,(i+1+K*j),1])
         else:
-            for i in range(j-1,K-j+1):       #corregir índice, sigue un número triangular
+            for i in range(j-1,K-j+1):       
                 vertex_list.append(np.array([i ,j]))
                 if  j < n:
                     if (K*j + i)%2 == 0: # and j%2 == 0:
                         GG.append([K*j + i-2*int(((j-1)*(j-2))/2)-j+1,K*(j+1)+i-2*int(((j)*(j-1))/2)-j,1])
-                    # elif (K*j + i)%2 == 0 and j%2 ==1:
-                    #     GG.append([K*j + i-int(j/2),K*(j+1)+i-int((j+1)/2),1])
+                    
                     if i != K-j:
                         GG.append([K*j+i-2*int(((j-1)*(j-2))/2)-j+1,(i+1+K*j)-2*int(((j-1)*(j-2))/2)-j+1,1])
                 elif j==n:
@@ -483,23 +437,21 @@ def triangle_hex_grid_sum_weighted(n):
             for i in range(0,K):       
                 vertex_list.append(np.array([i ,j]))
                 if  j < n:
-                    if (K*j + i)%2 == 0: # and j%2 == 0:
+                    if (K*j + i)%2 == 0: 
                         GG.append([K*j + i,K*(j+1)+i,K*j + i+K*(j+1)+i])
-                    # elif (K*j + i)%2 == 0 and j%2 ==1:
-                    #     GG.append([K*j + i-int(j/2),K*(j+1)+i-int((j+1)/2),1])
+                    
                     if i != K-1:
                         GG.append([K*j+i,(i+1+K*j),K*j+i+(i+1+K*j)])
                 elif j==n:
                     if i != K-1:
                         GG.append([K*j+i,(i+1+K*j),K*j+i+(i+1+K*j)])
         else:
-            for i in range(j-1,K-j+1):       #corregir índice, sigue un número triangular
+            for i in range(j-1,K-j+1):     
                 vertex_list.append(np.array([i ,j]))
                 if  j < n:
-                    if (K*j + i)%2 == 0: # and j%2 == 0:
+                    if (K*j + i)%2 == 0: 
                         GG.append([K*j + i-2*int(((j-1)*(j-2))/2)-j+1,K*(j+1)+i-2*int(((j)*(j-1))/2)-j,K*j + i-2*int(((j-1)*(j-2))/2)-j+1+K*(j+1)+i-2*int(((j)*(j-1))/2)-j])
-                    # elif (K*j + i)%2 == 0 and j%2 ==1:
-                    #     GG.append([K*j + i-int(j/2),K*(j+1)+i-int((j+1)/2),1])
+                   
                     if i != K-j:
                         GG.append([K*j+i-2*int(((j-1)*(j-2))/2)-j+1,(i+1+K*j)-2*int(((j-1)*(j-2))/2)-j+1,K*j+i-2*int(((j-1)*(j-2))/2)-j+1+(i+1+K*j)-2*int(((j-1)*(j-2))/2)-j+1])
                 elif j==n:
@@ -516,23 +468,21 @@ def triangle_hex_grid_dif_weighted(n):
             for i in range(0,K):       
                 vertex_list.append(np.array([i ,j]))
                 if  j < n:
-                    if (K*j + i)%2 == 0: # and j%2 == 0:
+                    if (K*j + i)%2 == 0: #
                         GG.append([K*j + i,K*(j+1)+i,abs(K*j + i-(K*(j+1)+i))])
-                    # elif (K*j + i)%2 == 0 and j%2 ==1:
-                    #     GG.append([K*j + i-int(j/2),K*(j+1)+i-int((j+1)/2),1])
+                    
                     if i != K-1:
                         GG.append([K*j+i,(i+1+K*j),abs(K*j+i - (i+1+K*j))])
                 elif j==n:
                     if i != K-1:
                         GG.append([K*j+i,(i+1+K*j),abs(K*j+i - (i+1+K*j))])
         else:
-            for i in range(j-1,K-j+1):       #corregir índice, sigue un número triangular
+            for i in range(j-1,K-j+1):       
                 vertex_list.append(np.array([i ,j]))
                 if  j < n:
-                    if (K*j + i)%2 == 0: # and j%2 == 0:
+                    if (K*j + i)%2 == 0: 
                         GG.append([K*j + i-2*int(((j-1)*(j-2))/2)-j+1,K*(j+1)+i-2*int(((j)*(j-1))/2)-j,abs(K*j + i-2*int(((j-1)*(j-2))/2)-j+1 - (K*(j+1)+i-2*int(((j)*(j-1))/2)-j))])
-                    # elif (K*j + i)%2 == 0 and j%2 ==1:
-                    #     GG.append([K*j + i-int(j/2),K*(j+1)+i-int((j+1)/2),1])
+                   
                     if i != K-j:
                         GG.append([K*j+i-2*int(((j-1)*(j-2))/2)-j+1,(i+1+K*j)-2*int(((j-1)*(j-2))/2)-j+1,abs(K*j+i-2*int(((j-1)*(j-2))/2)-j+1 - ((i+1+K*j)-2*int(((j-1)*(j-2))/2)-j+1))])
                 elif j==n:
@@ -657,7 +607,7 @@ def polygons(Planar_Graph,Vertex_List, edge): #Planar graph must be reduced
             clock_token = False
     return polygon_1, polygon_2
 
-def dual_graph(Planar_Graph, Vertex_List): #bastante ineficiente pero funciona #pueden aparecer aristas dobles si el grafo no está reducido
+def dual_graph(Planar_Graph, Vertex_List): 
     GG = []
     Dual_Polygons = []
     count = 0
