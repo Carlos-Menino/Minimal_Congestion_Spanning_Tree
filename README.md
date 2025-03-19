@@ -1,9 +1,10 @@
 # Minimal_Congestion_Spanning_Tree
 
 ------------------------------------------- General Description ---------------------------------------------------------
+
 We include three algorithms (written in python) in the present version that give estimations to the minimal STC problem.
 
-First algorithm:
+First algorithm sCD_p (or sCD_p_q):
 
 A descent algorithm that provides estimations in polynomial time to the minimal STC problems in undirected simple graphs with edge weights (unweighted graphs are identified with graphs with constant weight = 1)
 Arguments: (G,T,p)
@@ -11,9 +12,9 @@ G = graph, it is instanced as a list of edges. An edge is instanced as a list [u
 T = An arbitrary spanning tree of G instanced as a list of edges in T
 p = positive integer or np.inf, a parameter for the descent functional (in this case the Lp congestion as it is defined in the preprint "Minimal Lp congestion spanning trees on weighted graphs" by A. Castejón Lafuente, E. Estévez, C. Meniño Cotón and M.C. Somoza)
 
-Second and third algorithms:
+Second and third algorithms (LOC_BFS and ROC):
 
-These are algorithms that search a good spanning tree in the dual graph of a planar graph. Edge congestions in planar graphs are computed from lenghts of cycles in the dual graph, this allows a local control of the Lp congestions of a spanning tree, this allows recursive methods to construct spanning trees in the dual graph that are locally optimal for the congestion problem, these should be good estimations to the STC problem.
+These are algorithms that search a good spanning tree in the dual graph of a planar graph. Edge congestions in planar graphs are computed from lenghts of cycles in the dual graph, this allows a local control of the Lp congestions of a spanning tree and allows recursive methods to construct spanning trees in the dual graph that are locally optimal for the congestion problem, these should be good estimations to the STC problem in typical graphs.
 Arguments: (G,V,p)
 G = Planar graph, in the present version we assume that edges are in correspondence with straight segments of the plane, i.e., the planar graph is geodesic
 V = list of vertices in R^2 given as np.arrays
@@ -48,7 +49,7 @@ If you want to use the ROC algorithm in a rectangular grid with 30x15 vertices i
 >>> G, V = test_graphs.grid_graph(30,15)
 >>> stc, edge_congestion_list, output_spanning_tree = Congestion_Git.ROC(G,V,1)
 
-In this case, the progress gives what polygon is used as base vertex in the dual graph for the recursive method and the current value of the Lp congestion. LOC_BFS and ROC are faster than sCD_p but in general give worse estimates of the Lp congestions (but they are reasonably good and perform better in euclidean tilings).
+In this case, the progress gives what polygon is used as base vertex in the dual graph for the recursive method and the current value of the Lp congestion. LOC_BFS and ROC are faster than sCD_p but in general give worse estimates for the Lp congestions (but they are reasonably good and perform better in euclidean tilings).
 
 --------------------------------------------------- Warnings ---------------------------------------------------------------
 
