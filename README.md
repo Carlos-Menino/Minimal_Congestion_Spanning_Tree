@@ -35,7 +35,9 @@ Import in python console mandatory libraries and the repository files: spanning_
 If you want to test the sCD_p algorithm for the classical congestion in the hypercube graph H_7 beginning from a random spanning tree:
 
 >>> G = test_graphs.hypercube_graph(7)
+
 >>> T = spanning_trees.random_spanning_tree(G)
+
 >>> stc, edge_congestion_list, output_spanning_tree = Congestion_Git.sCD_p(G,T,np.inf)
 
 And just wait. You should see the progress printed in the console, for H_7 the computation should end in 5 to 10 minutes (in a mid range pc). For H_10 it may take a full day. It is recommended to make the first trys in small graphs to test the power or your pc.
