@@ -7,7 +7,6 @@ import spanning_trees
 from itertools import repeat
 
 number_cores = 16
-power = 10
         
 def path_tree_vertices(T,V_label,V_level,v,w): #finds the unique path in a labeled T joining v to w (v, w must be different)
      #T, V_label, V_level = labeling_tree(T) #T lo habremos etiquetado antes de llamar a esta función
@@ -779,4 +778,4 @@ def ROC(G,vertex_list, p): #G = planar graph, vertex_list = vertices in plane co
             last_congestion_list = congestion_list
     print(max(last_congestion_list), sum(last_congestion_list), last_congestion)
     print(last_congestion_list)
-    return last_congestion, max(last_congestion_list), last_tree
+    return last_congestion, last_congestion_list, last_tree
