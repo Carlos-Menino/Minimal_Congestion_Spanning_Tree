@@ -64,7 +64,7 @@ The previous discussion implies that these algorithms, in their present state, a
 
 The sCD_p algorithm, which is the most important one, uses the library multiprocess in order to parallelize some computations. The number of threads must be initialized in the file Congestion.py. The deafault value is 16.
 
-Multiprocess is konwn to have some issues in Windows systems. If this is your case, then you should virtualize or dual boot a linux distribution.
+Multiprocess is known to have some issues in Windows systems. If this is your case, then you should virtualize or dual boot a linux distribution.
 
 Mandatory python libraries: numpy, multiprocess, random, itertools, matplotlib, pylab
 
