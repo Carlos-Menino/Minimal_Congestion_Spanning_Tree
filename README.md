@@ -34,11 +34,11 @@ Import in python console mandatory libraries and the repository files: spanning_
 
 If you want to test the sCD_p algorithm for the classical congestion in the hypercube graph H_7 beginning from a random spanning tree:
 
->>> G = test_graphs.hypercube_graph(7)
+> G = test_graphs.hypercube_graph(7)
 
->>> T = spanning_trees.random_spanning_tree(G)
+> T = spanning_trees.random_spanning_tree(G)
 
->>> stc, edge_congestion_list, output_spanning_tree = Congestion_Git.sCD_p(G,T,np.inf)
+> stc, edge_congestion_list, output_spanning_tree = Congestion_Git.sCD_p(G,T,np.inf)
 
 And just wait. You should see the progress printed in the console, for H_7 the computation should end in 5 to 10 minutes (in a mid range pc). For H_10 it may take a full day. It is recommended to make the first trys in small graphs to test the power or your pc.
 
@@ -48,8 +48,9 @@ For planar graphs, you can also use the LOC_BFS and ROC algorithms.
 
 If you want to use the ROC algorithm in a rectangular grid with 30x15 vertices in order to estimate the L1 congestion:
 
->>> G, V = test_graphs.grid_graph(30,15)
->>> stc, edge_congestion_list, output_spanning_tree = Congestion_Git.ROC(G,V,1)
+> G, V = test_graphs.grid_graph(30,15)
+ 
+> stc, edge_congestion_list, output_spanning_tree = Congestion_Git.ROC(G,V,1)
 
 In this case, the progress gives what polygon is used as base vertex in the dual graph for the recursive method and the current value of the Lp congestion. LOC_BFS and ROC are faster than sCD_p but in general give worse estimates for the Lp congestions (but they are reasonably good and perform better in euclidean tilings).
 
