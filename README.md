@@ -26,7 +26,7 @@ These three algorithms are described in the work "Minimal Lp congestion spanning
 
 Recall also that p=1 gives spanning trees that are good estimations for the LSST problem (low stretch spanning tree) for unweighted graphs.
 
--------------------------------------------- Instruccions from python console -------------------------------------------------------------------------
+-------------------------------------------- Instructions from python console -------------------------------------------------------------------------
 
 Set the variable number_cores in the file Congestion_Git.py as you wish. This sets the number of threads to be used by multiprocess.
 
