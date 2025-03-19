@@ -1,5 +1,4 @@
 import numpy as np
-#import networkx as nx
 import random as rd
 from multiprocess import Pool
 import test_graphs
@@ -8,8 +7,7 @@ from itertools import repeat
 
 number_cores = 16
         
-def path_tree_vertices(T,V_label,V_level,v,w): #finds the unique path in a labeled T joining v to w (v, w must be different)
-     #T, V_label, V_level = labeling_tree(T) #T lo habremos etiquetado antes de llamar a esta función
+def path_tree_vertices(T,V_label,V_level,v,w): #finds the unique path in a labeled spanning tree T joining v to w (v, w must be different)
      index_v = V_label.index(v)
      index_w = V_label.index(w)
      level_v = V_level[index_v][1]
@@ -117,16 +115,13 @@ def process_path(G,T,tree_path,e,edge,p):
     return [New_congestion, new_cycle_hurt, new_edge_hurt_list, New_T, New_VL,New_VN]
 
 #################### AUX FUNCTIONS ##############################################
-def complete_multipartite_bound(order_list):
+def complete_multipartite_bound(order_list): #Gets an upperbound for the L1 congestion in complete multipartite graphs K_{order_list}, conjecturally is the L1 congestion
     suma = 0
     k = len(order_list)
     N = sum(order_list)
     if order_list[-1] == 1:
         for i in range(k-1):
-            #for j in range(i+1,k-1):
-                #suma = suma + 2*order_list[i]*order_list[j]
             suma = suma + order_list[i]*(N-order_list[i])
-        #suma = suma + sum(order_list) - order_list[-1]
     else:
         for i in range(k):
             suma = suma + order_list[i]*(N-order_list[i])
@@ -161,7 +156,7 @@ def sCD_p(G,T,p):
                 w = e[1]
                 tree_path = path_tree_vertices(T, VL, VN, v, w)
                 path_hurt_list = []
-                for edge in tree_path: #calculamos la congestión del camino anterior
+                for edge in tree_path: 
                     index_edge = T.index(edge)
                     path_hurt_list.append(edge_hurt_list[index_edge])
                     if p == np.inf:
@@ -182,8 +177,7 @@ def sCD_p(G,T,p):
                     New_T = new_congestion_list[optimal_index][3]
                     edge_hurt_list = new_congestion_list[optimal_index][2]
                     T, VL, VN = New_T, new_congestion_list[optimal_index][4], new_congestion_list[optimal_index][5]
-                    print('Current L', p, ' congestion: ', current_congestion)
-                    print('Current classical congestion:', max(edge_hurt_list))
+                    print('Current L', p, ' congestion: ', current_congestion,'Current classical congestion:', max(edge_hurt_list))
                     count = 0
                     check = True
                         
@@ -193,16 +187,13 @@ def sCD_p(G,T,p):
                     New_T = new_congestion_list[optimal_index][3]
                     edge_hurt_list = new_congestion_list[optimal_index][2]
                     T, VL, VN = New_T, new_congestion_list[optimal_index][4], new_congestion_list[optimal_index][5]
-
-                    print('Current L', p, ' congestion: ',current_congestion, ', edge count= ',count)
-                    print('Current classical congestion:', max(edge_hurt_list))
+                    print('Current L', p, ' congestion: ',current_congestion,  ', Current classical congestion:', max(edge_hurt_list)', edge count= ', count,)
                     count = 0
                     check = True
                    
                     break 
         if check == False:
-            print('Current L', p, ' congestion: ',current_congestion)
-            print('Current classical congestion:', max(edge_hurt_list))
+            print('Current L', p, ' congestion: ',current_congestion, 'Current classical congestion:', max(edge_hurt_list))
             token = True
         if count == len(G)-len(T)+2:
             token = True
@@ -215,7 +206,7 @@ def sCD_p_q(G,T, p, q):
     print('Check OK')
     edge_hurt_list = congestion_vector(G, T, VL,VN)
     if q == np.inf:
-        current_congestion = sum([h**p for h in edge_hurt_list]) #max(edge_hurt_list)
+        current_congestion = sum([h**p for h in edge_hurt_list])
         best_congestion = max(edge_hurt_list)
         best_T = T
         
@@ -237,7 +228,7 @@ def sCD_p_q(G,T, p, q):
                 w = e[1]
                 tree_path = path_tree_vertices(T, VL, VN, v, w)
                 path_hurt_list = []
-                for edge in tree_path: #calculamos la congestión del camino anterior
+                for edge in tree_path:
                     index_edge = T.index(edge)
                     path_hurt_list.append(edge_hurt_list[index_edge])
                     if p == 'inf':
