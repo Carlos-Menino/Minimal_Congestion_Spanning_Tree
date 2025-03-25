@@ -28,11 +28,11 @@ Recall also that p=1 gives spanning trees that are good estimations for the LSST
 
 -------------------------------------------- Instructions from python console ---------------------------------------------------------------
 
-Set the variable number_cores in the file Congestion_Git.py as you wish. This sets the number of threads to be used by multiprocess.
+Set the variable number_cores (by default number_cores = 16) in the file Congestion_Git.py as you wish. This sets the number of threads to be used by multiprocess.
 
 Import in python console mandatory libraries and the repository files: spanning_trees.py, test_graphs.py, Congestion_Git.py
 
-If you want to test the sCD_p algorithm for the classical congestion in the hypercube graph H_7 beginning from a random spanning tree:
+Example: If you want to test the sCD_p algorithm for the classical congestion in the hypercube graph H_7 beginning from a random spanning tree:
 
 > G = test_graphs.hypercube_graph(7)
 
@@ -40,7 +40,7 @@ If you want to test the sCD_p algorithm for the classical congestion in the hype
 
 > stc, edge_congestion_list, output_spanning_tree = Congestion_Git.sCD_p(G,T,np.inf)
 
-And just wait. You should see the progress printed in the console, for H_7 the computation should end in 5 to 10 minutes (in a mid range pc). For H_10 it may take a full day. It is recommended to make the first trys in small graphs to test the power or your pc.
+And just wait. You should see the progress printed in the console, for H_7 the computation should end in 5 to 10 minutes (in an average pc). For H_10 it may take a full day. It is recommended to make the first trys in small graphs to test the power or your pc.
 
 You can also use the experimental algorithm sCD_p_q, this algorithm uses the Lp congestion as descending functional but keeps the best Lq congestion along the explored trees. This is an alternative way to estimate the classical STC problem setting q = np.inf and p large (usually p = 10 is good).
 
@@ -56,9 +56,9 @@ In this case, the progress gives what polygon is used as base vertex in the dual
 
 --------------------------------------------------- Warnings ---------------------------------------------------------------
 
-The complexity of the algorithm sCD_p for p=np.infty and unweighted graphs is roughly upper estimated by O(m^3n^4) where m is the number of edges and n is the number of vertices.
+The complexity of the algorithm sCD_p for p=np.infty and unweighted graphs is roughly upper estimated by O(m^2n^3) where m is the number of edges and n is the number of vertices.
 
-For typicial graphs computer expriments give an effective complexity much slower (between O(m) and O(m^2)). Moreover the descent algorithm gets, in general, good estimations in time O(mn). Almost all the work load belongs to the latest steps of the descent instances. The algorithm prints the current congestion of the tree at each descent instance, it is a way to check the progress of the algorithm.
+For typicial graphs computer expriments give an effective complexity much slower (O(mn^2log(n)). Moreover the descent algorithm gets, in general, good estimations in time O(mn). Almost all the work load belongs to the latest steps of the descent instances. The algorithm prints the current congestion of the tree at each descent instance, it is a way to check the progress of the algorithm.
 
 The previous discussion implies that these algorithms, in their present state, are feasible for mid range applications (graphs with edges in the range [0,10^4]).
 
@@ -70,13 +70,13 @@ Mandatory python libraries: numpy, multiprocess, random, itertools, matplotlib, 
 
 --------------------------------------------------- To be done in near future ------------------------------------------------------
 
-Keep in mind that this project is handled entirely by myself (C. Meniño Cotón). Although these algorithms were tested in a large family of graphs, bugs could appear.
+Keep in mind that this project is handled entirely by myself (C. Meniño Cotón). Although these algorithms were tested in a large family of graphs with success, bugs could exist.
 
-Remark: I am not claiming that this is the fastest implementation possible and, in fact, I detected several points where the algorithms can be greatly improved. This will be done in the future and depending in the community response (and, of course, the available time).
+Remark 1: I am not claiming that this is the fastest implementation possible and, in fact, I detected several points where the algorithms can be greatly improved. This will be done in the future and depending in the community response (and, of course, the available time).
 
-Remark 2: test_graphs.py include a reasonable amount of test graphs to work with: Complete, complete multipartite, random, hypercube, discrete tori, cubic grid, rectangular grid, triangular grid (several configurations), hexagonal grid (several configurations), random planar and some weighted versions of these graphs. These families were chosen since the classical STC problem was already studied in most of them. These families will be also increased in the near future. In any case, any graph can be instanced by the user at any moment as a list of edges. Remark also that, in this program, vertices are labelled by intergers from 0 to n-1.
+Remark 2: test_graphs.py include a reasonable amount of test graphs to work with: Complete, complete multipartite, random, hypercube, discrete tori, cubic grid, rectangular grid, triangular grid (several configurations), hexagonal grid (several configurations), random planar and some weighted versions of these graphs. These families were chosen since the classical STC problem was already studied in most of them. These families will be also increased in the near future. In any case, any graph can be instanced by the user at any moment as a list of edges. Remark also that, in this program, vertices are always labelled by intergers from 0 to n-1.
 
-Remark 3: It is also expected to implement a graphical front end using PyQt.
+Remark 3: It is also expected to implement a graphical front-end using PyQt.
 
 
 
