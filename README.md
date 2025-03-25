@@ -40,7 +40,7 @@ Example: If you want to test the sCD_p algorithm for the classical congestion in
 
 > stc, edge_congestion_list, output_spanning_tree = Congestion_Git.sCD_p(G,T,np.inf)
 
-And just wait. You should see the progress printed in the console, for H_7 the computation should end in 5 to 10 minutes (in an average pc). For H_10 it may take a full day. It is recommended to make the first trys in small graphs to test the power or your pc.
+And just wait. You should see the progress printed in the console, it prints the current Lp-congestion and the classical congestion of the current spanning tree and the number (called edge-count) of edges visited by the algorithm until it reached one that improves the edge-congestion. For H_7 the computation should end in 5 to 10 minutes (in an average pc). For H_10 it may take a full day. It is recommended to make the first trys in small graphs to test the power or your pc.
 
 You can also use the experimental algorithm sCD_p_q, this algorithm uses the Lp congestion as descending functional but keeps the best Lq congestion along the explored trees. This is an alternative way to estimate the classical STC problem setting q = np.inf and p large (usually p = 10 is good).
 
