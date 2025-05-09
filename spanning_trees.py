@@ -2,7 +2,9 @@
 #A graph is instanced as a list of edges. An edge is instanced as a list [u, v, w] where u is the initial vertex, v is the ending vertex and w is a positive weight
 #Unweighted graphs are treated as graphs with constant weight w = 1
 #At this moment we are not dealing with oriented graphs, thus we are not going to make distinction between [u,v,w] and [v,u,w].
-
+# Please, if you use some part of this program, cite as:
+# Meniño Cotón, C. (2025). Minimal Spanning tree estimation via descent methods (Version 1.0) [Computer software]. https://github.com/Carlos-Menino/Minimal_Congestion_Spanning_Tree
+# Thanks!
 import random as rd
 
 def vertex_degree(G,v): #deg(v) for v vertex in G
