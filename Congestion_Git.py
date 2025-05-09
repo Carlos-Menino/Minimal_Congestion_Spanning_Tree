@@ -1,5 +1,6 @@
-#Please, cite as:
-#
+# Please, if you use some part of this program, cite as:
+# Meniño Cotón, C. (2025). Minimal Spanning tree estimation via descent methods (Version 1.0) [Computer software]. https://github.com/Carlos-Menino/Minimal_Congestion_Spanning_Tree
+# Thanks!
 import numpy as np
 import random as rd
 from multiprocess import Pool
