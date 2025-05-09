@@ -1,3 +1,5 @@
+#Please, cite as:
+#
 import numpy as np
 import random as rd
 from multiprocess import Pool
@@ -115,20 +117,24 @@ def process_path(G,T,tree_path,e,edge,p):
     return [New_congestion, new_cycle_hurt, new_edge_hurt_list, New_T, New_VL,New_VN]
 
 #################### AUX FUNCTIONS ##############################################
-def complete_multipartite_bound(order_list): #Gets an upperbound for the L1 congestion in complete multipartite graphs K_{order_list}, conjecturally is the L1 congestion
+def complete_multipartite_bound(order_list,p): #Gets an upperbound for the Lp, 1<= p < np.inf congestion in complete multipartite graphs K_{order_list}, conjecturally it is the Lp congestion
     suma = 0
     k = len(order_list)
     N = sum(order_list)
     if order_list[-1] == 1:
         for i in range(k-1):
-            suma = suma + order_list[i]*(N-order_list[i])
+            #for j in range(i+1,k-1):
+                #suma = suma + 2*order_list[i]*order_list[j]
+            suma = suma + order_list[i]*(N-order_list[i])**p
+        #suma = suma + sum(order_list) - order_list[-1]
     else:
         for i in range(k):
-            suma = suma + order_list[i]*(N-order_list[i])
-        A = (order_list[-1]-2)*N - order_list[-1]**2 + 2
-        B = (order_list[0]-2)*N - order_list[0]**2 + 2
-        suma = suma + min(A,B)
-        
+            suma = suma + order_list[i]*(N-order_list[i])**p
+        n1 = order_list[0]
+        nk = order_list[-1]
+        suma1 = suma + (nk-1)*((2*N-n1-nk-2)**p-(N-n1)**p) - (N-nk)**p  
+        suma2 = suma - (N-n1)**p-(N-nk)**p + (nk*(N-nk-1)+2-n1)**p
+        suma = min(suma1,suma2)
     return suma
 
 #################### CONGESTION ALGORITHMS ###########################################
